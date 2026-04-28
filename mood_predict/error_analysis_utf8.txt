@@ -1,0 +1,31 @@
+Loading data and models...
+Preprocessing test data...
+Predicting...
+
+--- Analysis for 'Love' ---
+True sadness predicted as Love: 140
+True joy predicted as Love: 2112
+True anger predicted as Love: 57
+True fear predicted as Love: 24
+True surprise predicted as Love: 6
+
+--- Analysis for 'Surprise' ---
+True sadness predicted as Surprise: 96
+True joy predicted as Surprise: 319
+True love predicted as Surprise: 31
+True anger predicted as Surprise: 27
+True fear predicted as Surprise: 774
+
+Top 5 True Joy predicted as Love:
+- i feel blessed to have been able to spend one semester teaching young adult literature
+- im not sure if this is normal for pageant girls but all im feeling is the sweet part of bittersweet
+- i am feeling a little passionate
+- i watched on thanksgiving this morning i am feeling doubly blessed for what god has given me
+- i feel so blessed to be able to be part of the process
+
+Top 5 True Fear predicted as Surprise:
+- i keep teetering between soaking it up and feeling pretty overwhelmed
+- i am now feeling a weird sort of dizziness like as if underwater and the waves are washing back and forward around me
+- i was starting to feel the beginnings of not being overwhelmed
+- i buy a non stretch jeans and i feel weird in it does not stick to the body the fabric is very soft and gives a lot is a cool and comfortable pants you can move freely sorry i had left a little short i give it four stars because the color they sent me chocolate is lighter than this in the photo
+- im sure you would feel very strange about it

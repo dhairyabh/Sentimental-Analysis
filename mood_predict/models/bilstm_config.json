@@ -1,0 +1,1 @@
+{"vocab_size": 8082, "embedding_dim": 128, "hidden_dim": 128, "output_dim": 6, "n_layers": 2, "dropout": 0.3, "max_len": 64, "id2label": {"0": "sadness", "1": "joy", "2": "love", "3": "anger", "4": "fear", "5": "surprise"}}

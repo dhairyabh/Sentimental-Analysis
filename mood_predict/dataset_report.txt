@@ -1,0 +1,42 @@
+Dataset Information Report
+==========================
+
+Dataset File: text.csv
+
+Dimensions:
+-----------
+Number of Rows: 416,810 (excluding header)
+Number of Columns: 3
+
+Columns:
+--------
+1. [Unnamed: 0] (Index)
+2. text (Text content)
+3. label (Emotion/Sentiment Label)
+
+Sample Data (First 20 Rows):
+---------------------------
+Row | Index | Text | Label
+----|-------|------|------
+1   | 0     | i just feel really helpless and heavy hearted | 4
+2   | 1     | ive enjoyed being able to slouch about relax and unwind and frankly needed it after those last few weeks around the end of uni and the expo i have lately started to find myself feeling a bit listless which is never really a good thing | 0
+3   | 2     | i gave up my internship with the dmrg and am feeling distraught | 4
+4   | 3     | i dont know i feel so lost | 0
+5   | 4     | i am a kindergarten teacher and i am thoroughly weary of my job after having taken the university entrance exam i suffered from anxiety for weeks as i did not want to carry on with my work studies were the only alternative | 4
+6   | 5     | i was beginning to feel quite disheartened | 0
+7   | 6     | i would think that whomever would be lucky enough to stay in this suite must feel like it is the most romantic place on earth | 2
+8   | 7     | i fear that they won t ever feel that delicious excitement of christmas eve at least not in the same way i remember doing it | 1
+9   | 8     | im forever taking some time out to have a lie down because i feel weird | 5
+10  | 9     | i can still lose the weight without feeling deprived | 0
+11  | 10    | i try to be nice though so if you get a bitchy person on the phone or at the window feel free to have a little fit and throw your pen at her face | 1
+12  | 11    | im feeling a little like a damaged tree and that my roots are a little out of wack | 0
+13  | 12    | i have officially graduated im not feeling as ecstatic as i thought i would | 1
+14  | 13    | i feel like a jerk because the library students who all claim to love scrabble cant be bothered to participate and clearly scrabble is an inappropriate choice for a group of students whose native language isnt english | 3
+15  | 14    | i feel my portfolio demonstrates how eager i am to learn but some who know me better might call it annoyingly persistent | 1
+16  | 15    | i may be more biased than the next because i have a dependent life to take care of and to keep safe but i feel we all need to take care of ourselves as well | 1
+17  | 16    | i didn t feel terrific | 1
+18  | 17    | i miss all the others as well that feel that i wronged them and they will soon understand that i didnt | 3
+19  | 18    | i feel so stupid that i realise it so late | 0
+20  | 19    | i saunter through the airport terminals feeling that i have had an experience that renders the petty tribulations of everyday travel somehow far less significant | 3
+
+[Note: Showing only the first 20 rows due to the large size of the dataset (416,810 rows total).]

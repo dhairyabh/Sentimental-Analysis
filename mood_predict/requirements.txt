@@ -1,0 +1,11 @@
+pandas
+numpy
+nltk
+scikit-learn
+joblib
+matplotlib
+seaborn
+torch
+transformers
+datasets
+evaluate

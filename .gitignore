@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+mood_predict/text.csv
+scratch/
+.DS_Store
+mood_predict/models/distilbert-*
+mood_predict/models/*.pth
+mood_predict/models/*.pt
+mood_predict/models/*.bin
+mood_predict/models/*.safetensors

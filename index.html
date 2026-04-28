@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodSense AI | Emotion Detection</title>
+    <meta name="description" content="AI-powered mood & sentiment analysis. Type any message and discover the emotion within.">
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ===== ANIMATED BACKGROUND ===== -->
+    <div class="scene">
+        <canvas id="neural-canvas"></canvas>
+        <div class="orb-field">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="orb orb-4"></div>
+        </div>
+        <div class="scanlines"></div>
+        <div class="glow-ring" id="glow-ring"></div>
+    </div>
+
+    <!-- ===== MAIN APP ===== -->
+    <div class="app-shell">
+
+        <!-- ── TOP NAV ── -->
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <svg class="nav-logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="18" cy="18" r="16" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2.5"/>
+                    <path d="M10 18 C10 12 15 9 18 9 C21 9 26 12 26 18 C26 24 22 27 18 27 C14 27 10 24 10 18Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <circle cx="18" cy="18" r="3" fill="currentColor" opacity="0.7"/>
+                    <line x1="18" y1="9" x2="18" y2="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="26" y1="18" x2="30" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="26" y1="18" x2="30" y2="21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="10" y1="18" x2="6" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="10" y1="18" x2="6" y2="21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span class="nav-title">MoodSense <span class="nav-title-ai">AI</span></span>
+            </div>
+            <div class="nav-badges">
+                <div class="badge-chip">
+                    <span class="pulse-dot"></span>
+                    <span>ML Model Active</span>
+                </div>
+                <div class="badge-chip badge-secondary">6 Emotions</div>
+                <div class="badge-chip badge-secondary">Real-time</div>
+            </div>
+        </nav>
+
+        <!-- ── MAIN CONTENT ── -->
+        <main class="content-grid">
+
+            <!-- LEFT PANEL: Input -->
+            <section class="panel panel-left" aria-label="Input Panel">
+                <div class="panel-header">
+                    <h1 class="panel-title">Decode <span class="gradient-text">Emotion</span></h1>
+                    <p class="panel-subtitle">Enter any text — our AI model will instantly identify the hidden emotion within.</p>
+                </div>
+
+                <div class="input-block">
+                    <div class="textarea-wrapper" id="textarea-wrapper">
+                        <div class="textarea-label">Your Message</div>
+                        <textarea
+                            id="message-input"
+                            placeholder="e.g. 'I can't believe how amazing today has been!'"
+                            rows="5"
+                            maxlength="500"
+                            spellcheck="false"
+                            aria-label="Enter your message"></textarea>
+                        <div class="textarea-meta">
+                            <span class="error-text" id="error-text">⚠ Please enter a message first.</span>
+                            <span class="char-count" id="char-count">0 / 500</span>
+                        </div>
+                        <div class="textarea-corner-glow"></div>
+                    </div>
+
+                    <button id="predict-btn" class="predict-btn" aria-label="Analyze Emotion">
+                        <span class="btn-shimmer"></span>
+                        <span class="btn-icon" aria-hidden="true">⚡</span>
+                        <span class="btn-text">Analyze Emotion</span>
+                        <span class="loader" id="loader" aria-hidden="true">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </span>
+                    </button>
+
+                    <!-- Sample prompts -->
+                    <div class="samples-row">
+                        <span class="samples-label">Try:</span>
+                        <button class="sample-chip" data-text="I'm so happy, everything is perfect today!">😊 Joy</button>
+                        <button class="sample-chip" data-text="I love you more than words can say.">❤️ Love</button>
+                        <button class="sample-chip" data-text="This makes me so angry I can't think.">😡 Anger</button>
+                        <button class="sample-chip" data-text="I'm scared and don't know what to do.">😨 Fear</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIVIDER -->
+            <div class="panel-divider" aria-hidden="true">
+                <div class="divider-line"></div>
+                <div class="divider-icon">✦</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <!-- RIGHT PANEL: Result -->
+            <section class="panel panel-right" aria-label="Result Panel" aria-live="polite">
+                <!-- Initial Empty State -->
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-orb"></div>
+                    <div class="empty-icon" aria-hidden="true">🧠</div>
+                    <p class="empty-title">Awaiting Analysis</p>
+                    <p class="empty-sub">Your emotion result will appear here once you hit Analyze.</p>
+                    <div class="empty-dots">
+                        <span class="ept-dot"></span>
+                        <span class="ept-dot"></span>
+                        <span class="ept-dot"></span>
+                    </div>
+                </div>
+
+                <!-- Result Card (hidden until prediction) -->
+                <div class="result-display hidden" id="result-display" aria-live="polite">
+                    <div class="result-bg-shimmer"></div>
+
+                    <!-- Emoji Ring -->
+                    <div class="emoji-zone">
+                        <div class="emoji-ring-outer">
+                            <div class="emoji-ring-inner">
+                                <div class="emoji-display" id="mood-emoji" aria-label="Emotion Emoji">😊</div>
+                            </div>
+                        </div>
+                        <div class="emoji-glow" id="emoji-glow"></div>
+                    </div>
+
+                    <!-- Emotion Info -->
+                    <div class="emotion-info">
+                        <div class="emotion-label">Detected Emotion</div>
+                        <h2 class="emotion-value" id="mood-value">Joy</h2>
+                        <p class="emotion-desc" id="mood-desc">Your message radiates warmth and positivity!</p>
+                    </div>
+
+                    <!-- Confidence -->
+                    <div class="confidence-block">
+                        <div class="confidence-header">
+                            <span class="confidence-label">Confidence Score</span>
+                            <span class="confidence-pct" id="confidence-value">98.2%</span>
+                        </div>
+                        <div class="confidence-track">
+                            <div class="confidence-fill" id="confidence-bar"></div>
+                        </div>
+                    </div>
+
+                    <!-- Meta tags -->
+                    <div class="result-tags" id="result-tags">
+                        <span class="tag" id="tag-model">Logistic (v8)</span>
+                        <span class="tag" id="tag-powered">TF-IDF 100K</span>
+                        <span class="tag" id="tag-emoji" aria-hidden="true">✦ AI</span>
+                    </div>
+
+                    <!-- AI Insight -->
+                    <div class="ai-insight-box">
+                        <div class="analysis-header ai-header">
+                            <span class="analysis-icon">✨</span>
+                            <span class="analysis-label">MoodSense AI Insights</span>
+                        </div>
+                        <p class="ai-analysis-text" id="ai-analysis-text">
+                            <em>Analysis will appear here...</em>
+                        </p>
+                    </div>
+
+                    <!-- AI Reasoning -->
+                    <div class="analysis-box">
+                        <div class="analysis-header">
+                            <span class="analysis-icon">📋</span>
+                            <span class="analysis-label">Feature Breakdown</span>
+                        </div>
+                        <div class="analysis-tokens" id="analysis-tokens">
+                            <!-- Populated by JS -->
+                        </div>
+                        <p class="analysis-hint">Above: The exact features the local ML model used for prediction.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </div><!-- /app-shell -->
+
+    <script src="app.js"></script>
+</body>
+
+</html>
