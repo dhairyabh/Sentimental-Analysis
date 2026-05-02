@@ -152,14 +152,17 @@ def analyze():
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are an expert sentiment analyst. Analyze the following text.\n\n"
-                                   "First, provide a single-word emotion label from this list: [sadness, joy, love, anger, fear, surprise].\n"
-                                   "Second, provide a confidence percentage (e.g., 92%).\n"
-                                   "Then, on a new line, provide a brief, insightful explanation (max 2-3 sentences).\n\n"
+                        "content": "You are an expert sentiment analyst specializing in English and Hinglish (Hindi + English). Analyze the following text.\n\n"
+                                   "Provide your response in EXACTLY this format:\n"
+                                   "Label: [sadness, joy, love, anger, fear, surprise]\n"
+                                   "Confidence: [0-100]%\n"
+                                   "Emoji: [one best matching emoji]\n"
+                                   "Explanation: [brief 2-sentence explanation]\n\n"
                                    "Example:\n"
-                                   "joy\n"
-                                   "95%\n"
-                                   "The user is expressing great happiness and satisfaction."
+                                   "Label: joy\n"
+                                   "Confidence: 95%\n"
+                                   "Emoji: 😍\n"
+                                   "Explanation: The user is expressing great happiness and satisfaction in Hinglish."
                     },
                     {
                         "role": "user",
@@ -171,24 +174,35 @@ def analyze():
             )
             raw_ai_response = chat_completion.choices[0].message.content.strip()
             
-            # Split into parts
+            # Parsing the structured response
             lines = raw_ai_response.split('\n')
-            if len(lines) >= 1:
-                ai_label = lines[0].strip().lower().replace('.', '')
-                # Validate label
+            ai_data = {}
+            for line in lines:
+                if ':' in line:
+                    k, v = line.split(':', 1)
+                    ai_data[k.strip().lower()] = v.strip()
+            
+            # Extract Label
+            if 'label' in ai_data:
+                ai_label = ai_data['label'].lower().replace('.', '')
                 if ai_label in LABEL_MAP.values():
                     emotion = ai_label
-                
-                # Parse confidence if available
-                if len(lines) >= 2:
-                    conf_match = re.search(r"(\d+)%", lines[1])
-                    if conf_match:
-                        confidence = int(conf_match.group(1)) / 100.0
-                
-                if len(lines) > 2:
-                    ai_analysis = "\n".join(lines[2:]).strip()
-                else:
-                    ai_analysis = raw_ai_response
+            
+            # Extract Confidence
+            if 'confidence' in ai_data:
+                conf_match = re.search(r"(\d+)", ai_data['confidence'])
+                if conf_match:
+                    confidence = int(conf_match.group(1)) / 100.0
+            
+            # Extract Emoji
+            ai_emoji = ai_data.get('emoji', None)
+            
+            # Extract Explanation
+            if 'explanation' in ai_data:
+                ai_analysis = ai_data['explanation']
+            else:
+                ai_analysis = raw_ai_response # Fallback
+
 
         except Exception as e:
             print(f"Groq API Error: {e}")
@@ -198,7 +212,8 @@ def analyze():
         "mood": emotion,
         "confidence": round(confidence, 4),
         "clean_text": clean_text,
-        "ai_analysis": ai_analysis
+        "ai_analysis": ai_analysis,
+        "ai_emoji": ai_emoji if 'ai_emoji' in locals() else None
     })
 
 @app.route('/health', methods=['GET'])

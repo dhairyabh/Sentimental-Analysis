@@ -250,7 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const emojiEl = document.getElementById('mood-emoji');
         if (emojiEl) {
             const clone = emojiEl.cloneNode(true);
-            clone.textContent = data.emoji;
+            // Prioritize AI provided emoji, then fallback to moodMap, then default to '😐'
+            clone.textContent = response.ai_emoji || data.emoji || '😐';
             emojiEl.parentNode.replaceChild(clone, emojiEl);
         }
 
