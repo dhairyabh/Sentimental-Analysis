@@ -315,7 +315,8 @@ body {
 .nav-logo {
     width: 28px;
     height: 28px;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 50%;
     filter: drop-shadow(0 0 8px var(--c1));
     transition: transform var(--transition-spring), filter var(--transition-theme);
 }

@@ -31,6 +31,10 @@ def index():
 def favicon():
     return send_from_directory('.', 'favicon.png')
 
+@app.route('/favicon.ico')
+def favicon_ico():
+    return send_from_directory('.', 'favicon.png')
+
 @app.route('/logo.png')
 def logo():
     return send_from_directory('.', 'logo.png')
