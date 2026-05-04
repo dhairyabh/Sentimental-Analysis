@@ -27,6 +27,14 @@ groq_client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 def index():
     return app.send_static_file('index.html')
 
+@app.route('/favicon.png')
+def favicon():
+    return send_from_directory('.', 'favicon.png')
+
+@app.route('/logo.png')
+def logo():
+    return send_from_directory('.', 'logo.png')
+
 # --- NLTK Data Setup ---
 # Download necessary NLTK data (only if not already present)
 try:

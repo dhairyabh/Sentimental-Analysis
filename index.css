@@ -316,9 +316,12 @@ body {
     width: 28px;
     height: 28px;
     object-fit: contain;
-    animation: spinSlow 25s linear infinite;
     filter: drop-shadow(0 0 8px var(--c1));
-    transition: filter var(--transition-theme);
+    transition: transform var(--transition-spring), filter var(--transition-theme);
+}
+
+.nav-brand:hover .nav-logo {
+    transform: scale(1.15) rotate(5deg);
 }
 
 @keyframes spinSlow {
